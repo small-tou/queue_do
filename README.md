@@ -11,6 +11,9 @@ queue_do
 npm install queuedo
 </pre>
 
+web版见：lib/queue_do_webjs.js
+
+
 #原理和使用
 
 文章见：http://www.html-js.com/?p=1474
