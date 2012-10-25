@@ -70,3 +70,62 @@ walk(source,function(list){
 })
 
 </pre>
+
+几个异步方法的同步化：
+下面的例子是同步去请求豆瓣三个api，最后请求完后显示出来的例子。
+<pre>
+var queuedo=require("queuedo");
+var Douban = require("douban");
+module.exports = function(req, res) {
+    var config = {
+        app_key:"0bb4b9fc67f9b013231e2df537ed1039",
+        app_secret:"e7434521cb0c70ad",
+        redirect_uri:"http://localhost:8080/sina_auth_cb",
+        access_token:req.cookies.token
+    }
+    var api = new Douban(config);
+    var datas=[
+        
+    ]
+    var functions=[
+    function(callback){
+        api.shuo.statuses({
+            source:config.app_key,
+            text:"hello nodejs"+Math.random()
+        },function(error,data){
+            datas.push({
+                api:"shuo.statuses",
+                data:data
+            });
+            callback();
+        });
+    }, function(callback){
+        api.shuo.home_timeline({},function(error,data){
+            datas.push({
+                api:"shuo.home_timeline",
+                data:data
+            })
+            callback();
+        });
+    }, function(callback){
+        api.shuo.user_timeline({
+            screen_name:"mier963"
+        },function(error,data){
+            datas.push({
+                api:"shuo.user_timeline",
+                data:data
+            })
+            callback();
+        });
+    }];
+    queuedo(functions,function(func,next,context){
+        func(function(){
+            next.call(context);
+        });
+    },function(){
+        res.render("shuo.html",{
+            data:datas
+        })
+    });
+}
+</pre>
