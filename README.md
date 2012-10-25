@@ -73,6 +73,7 @@ walk(source,function(list){
 
 几个异步方法的同步化：
 下面的例子是同步去请求豆瓣三个api，最后请求完后显示出来的例子。
+只是示例，完整程序的一部分，不能运行。
 <pre>
 var queuedo=require("queuedo");
 var Douban = require("douban");
