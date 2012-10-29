@@ -1,7 +1,7 @@
 {
     "name":"queuedo",
     "description":"异步队列同步化，支持递归嵌套",
-    "version":"0.9.5",
+    "version":"0.9.6",
     "keywords":"queue asynchronous synchro",
     "contributors":[{
         "name": "yutou",
